@@ -19,11 +19,11 @@ import androidx.navigation.fragment.findNavController
 
 class SplashFragment : Fragment() {
 
-    private lateinit var rootView:View
+    private lateinit var rootView: View
 
     // View Elemente :
-    private lateinit var icon : ImageView
-    private lateinit var title : TextView
+    private lateinit var icon: ImageView
+    private lateinit var title: TextView
 
     // Animation Value :
     private val animDuration = 500L
@@ -50,40 +50,36 @@ class SplashFragment : Fragment() {
     }
 
     private fun startAnimation() {
-
         val imageSet = AnimatorSet().apply {
-            play(createObjectAnimator(icon,View.ALPHA,1f))
-                .with(createObjectAnimator(icon,View.TRANSLATION_Y,0f))
+            play(createObjectAnimator(icon, View.ALPHA, 1f))
+                .with(createObjectAnimator(icon, View.TRANSLATION_Y, 0f))
         }
 
         val textSet = AnimatorSet().apply {
-            play(createObjectAnimator(title,View.ALPHA,1f,0))
-                .with(createObjectAnimator(icon,View.TRANSLATION_Y,0f,0))
+            play(createObjectAnimator(title, View.ALPHA, 1f, 0))
+                .with(createObjectAnimator(icon, View.TRANSLATION_Y, 0f, 0))
         }
 
 
         val animSet = AnimatorSet().apply {
             play(imageSet)
                 .before(textSet)
-                start()
+            start()
         }
 
-        animSet.addListener(object : Animator.AnimatorListener{
+        animSet.addListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator?) {
             }
 
             override fun onAnimationEnd(animation: Animator?) {
                 Thread(Runnable {
                     Thread.sleep(500)
-
-                  //  findNavController(R.id.splash_screen).navigate(R.id.action_splase_home)
+                    //  findNavController(R.id.splash_screen).navigate(R.id.action_splase_home)
 
                 }).start()
-            //    Navigation.findNavController(rootView).popBackStack(R.id.homeFragment,true)
                 findNavController().navigate(R.id.action_splase_home)
-               /* Navigation.findNavController(requireView()).popBackStack(
-                    R.id.homeFragment, true)*/
-               // findNavController().navigate(SplashFragment.actionSplaseHome())
+                /* Navigation.findNavController(requireView()).popBackStack(
+                     R.id.homeFragment, true)*/
 
             }
 
@@ -97,9 +93,13 @@ class SplashFragment : Fragment() {
 
     }
 
-    private fun createObjectAnimator(view:View,type: Property<View, Float>, value: Float,delay:Long = 1000):ObjectAnimator
-    {
-        val animator = ObjectAnimator.ofFloat(view,type,value).apply {
+    private fun createObjectAnimator(
+        view: View,
+        type: Property<View, Float>,
+        value: Float,
+        delay: Long = 1000
+    ): ObjectAnimator {
+        val animator = ObjectAnimator.ofFloat(view, type, value).apply {
             startDelay = delay
             duration = animDuration
             interpolator = FastOutLinearInInterpolator()
